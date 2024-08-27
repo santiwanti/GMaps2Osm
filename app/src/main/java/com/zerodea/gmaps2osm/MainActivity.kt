@@ -78,6 +78,7 @@ fun LinkDeciphering(
     modifier: Modifier = Modifier
 ) {
     var hasDecipheredLink by remember { mutableStateOf(false) }
+    var decipheredLink by remember { mutableStateOf("") }
     Box(
         modifier = modifier,
         contentAlignment = Alignment.Center,
@@ -100,8 +101,8 @@ fun LinkDeciphering(
                                     .drop(1)
                                     .split(',')
                                     .take(2)
-                                val uri =
-                                    Uri.parse("geo:${coordinates[0]},${coordinates[1]}")
+                                decipheredLink = "geo:${coordinates[0]},${coordinates[1]}"
+                                val uri = Uri.parse(decipheredLink)
                                 context.startActivity(
                                     Intent(
                                         Intent.ACTION_VIEW,
@@ -122,17 +123,21 @@ fun LinkDeciphering(
             modifier = Modifier.size(1.dp),
         )
 
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Text(
-                "Deciphering the link might take a couple seconds",
-                textAlign = TextAlign.Center,
-            )
+        if (!hasDecipheredLink) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Text(
+                    "Deciphering the link might take a couple seconds",
+                    textAlign = TextAlign.Center,
+                )
 
-            CircularProgressIndicator(
-                modifier = Modifier.size(50.dp),
-            )
+                CircularProgressIndicator(
+                    modifier = Modifier.size(50.dp),
+                )
+            }
+        } else {
+            Text("Link successfully deciphered: $decipheredLink")
         }
     }
 }
