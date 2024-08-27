@@ -1,0 +1,1 @@
+An app to convert from Google Maps links to links that OSM can understand. The app will automatically attempt to open any Google Maps link in your OSM client when you click them.

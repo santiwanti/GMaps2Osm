@@ -1,0 +1,1 @@
+Convert GMaps links to OSM Client compatible links
